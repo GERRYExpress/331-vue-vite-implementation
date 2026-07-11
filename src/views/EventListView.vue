@@ -1,15 +1,15 @@
 <script setup lang="ts">
 import EventCard from '@/components/EventCard.vue';
 import EventDetail from '@/components/EventDetail.vue';
+import EventService from '@/services/EventService';
 import type { Event } from '@/types.ts'
-import axios from 'axios';
 import { ref, onMounted } from 'vue';
 const events = ref<Event[] | null>(null);
 
 onMounted(() => {
-  axios.get('https://my-json-server.typicode.com/GERRYExpress/demo-web-server/events')
-    .then(res => console.log(res))
-    .catch(err => console.error('There was an error!', err));
+  EventService.getEvents()
+    .then(res => events.value = res.data)
+    .catch(err => console.error('An error occurred!', err))
 })
 </script>
 

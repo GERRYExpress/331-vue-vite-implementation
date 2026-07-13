@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { Event } from '@/types.ts';
+import EventDetail from './EventDetail.vue';
 
 defineProps<{
   event: Event
@@ -13,6 +14,7 @@ defineProps<{
       <h2>{{ event.title }}</h2>
       <span>@{{ event.time }} on {{ event.date }}</span>
     </div>
+    <EventDetail :event="event" />
   </div>
 </template>
 
@@ -20,6 +22,7 @@ defineProps<{
 .event-class {
   display: flex;
   justify-content: center;
+  gap: 16px;
 }
 
 .event-card {

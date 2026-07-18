@@ -1,10 +1,19 @@
 <script setup lang="ts">
-import { RouterLink, RouterView } from 'vue-router'
+import { ref, watch } from 'vue';
+import { RouterLink, RouterView, useRouter } from 'vue-router'
+const totalPages = ref(2);
+const router = useRouter();
+watch(() => totalPages.value, () => {
+  router.push({
+    query: { _limit: totalPages.value }
+  })
+})
 </script>
 
 <template>
   <div id="layout">
     <header>
+
       <div class="wrapper">
         <nav>
           <RouterLink :to="{ name: 'event-list-view' }">Event</RouterLink>
@@ -12,6 +21,9 @@ import { RouterLink, RouterView } from 'vue-router'
         </nav>
       </div>
     </header>
+    <select name="page" id="total-page" v-model="totalPages">
+      <option v-for="page in [1, 2, 3, 4, 5, 6]" :key="page" :value="page">{{ page }}</option>
+    </select>
     <RouterView />
   </div>
 </template>

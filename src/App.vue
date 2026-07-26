@@ -3,7 +3,7 @@ import { ref, watch } from 'vue';
 import { RouterLink, RouterView, useRouter } from 'vue-router'
 import { useMessageStore } from './stores/message';
 import { storeToRefs } from 'pinia';
-const totalPages = ref(2);
+const totalPages = ref(3); // Change total list per page here
 const router = useRouter();
 const store = useMessageStore()
 const { message } = storeToRefs(store)

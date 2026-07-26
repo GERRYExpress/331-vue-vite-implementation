@@ -6,7 +6,7 @@ import { ref, computed, watchEffect, onMounted } from 'vue';
 const events = ref<Event[] | null>(null);
 const totalEvents = ref(0);
 const hasNextPage = computed(() => {
-  const totalPages = Math.ceil(totalEvents.value / props.totalPage)
+  const totalPages = Math.ceil(totalEvents.value / /* props.totalPage */ 3)
   return page.value < totalPages
 })
 
@@ -24,7 +24,7 @@ const page = computed(() => props.page)
 onMounted(() => {
   events.value = null
   watchEffect(() => {
-    EventService.getEvents(props.totalPage, page.value)
+    EventService.getEvents(/* props.totalPage */ 3, page.value)
       .then(res => {
         events.value = res.data;
         totalEvents.value = res.headers['x-total-count']

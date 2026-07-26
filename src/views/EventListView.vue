@@ -2,7 +2,7 @@
 import EventCard from '@/components/EventCard.vue';
 import EventService from '@/services/EventService';
 import type { Event } from '@/types.ts'
-import { ref, computed, watchEffect } from 'vue';
+import { ref, computed, watchEffect, onMounted } from 'vue';
 const events = ref<Event[] | null>(null);
 const totalEvents = ref(0);
 const hasNextPage = computed(() => {
@@ -21,14 +21,16 @@ const props = defineProps({
   }
 })
 const page = computed(() => props.page)
-watchEffect(() => {
+onMounted(() => {
   events.value = null
-  EventService.getEvents(props.totalPage, page.value)
-    .then(res => {
-      events.value = res.data;
-      totalEvents.value = res.headers['x-total-count']
-    })
-    .catch(err => console.error('There was an error!', err))
+  watchEffect(() => {
+    EventService.getEvents(props.totalPage, page.value)
+      .then(res => {
+        events.value = res.data;
+        totalEvents.value = res.headers['x-total-count']
+      })
+      .catch(err => console.error('There was an error!', err))
+  })
 })
 </script>
 

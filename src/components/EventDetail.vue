@@ -6,23 +6,9 @@ defineProps<{
 </script>
 
 <template>
-    <div class="event-detail">
+    <div
+        class="flex flex-col ml-auto text-right text-[20px] my-[12px] border border-purple-700 p-[20px] w-max-[275px] w-full">
         <p>Category: {{ event.category }}</p>
         <p>Organizer: {{ event.organizer }}</p>
     </div>
 </template>
-
-<style scoped>
-.event-detail {
-    display: flex;
-    flex-direction: column;
-    margin-left: auto;
-    text-align: right;
-    font-size: 20px;
-    margin: 12px 0;
-    border: 1px solid rebeccapurple;
-    padding: 20px;
-    max-width: 275px;
-    width: 100%;
-}
-</style>

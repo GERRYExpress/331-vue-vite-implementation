@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { SpeedInsights } from '@vercel/speed-insights/vue';
 import { ref, watch } from 'vue';
 import { RouterLink, RouterView, useRouter } from 'vue-router'
 import { useMessageStore } from './stores/message';
@@ -15,6 +16,7 @@ watch(() => totalPages.value, () => {
 </script>
 
 <template>
+  <SpeedInsights />
   <div class="text-center font-sans text-gray-700 antialiased">
     <header>
       <div id="flashMessage" class="animate-fade" v-if="message">

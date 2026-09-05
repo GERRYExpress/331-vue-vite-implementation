@@ -1,8 +1,10 @@
 <script setup lang="ts">
 import EventService from '@/services/EventService';
+import { useMessageStore } from '@/stores/message';
 import type { Event } from '@/types';
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
+const store = useMessageStore()
 const event = ref<Event>({
     id: null,
     category: '',
@@ -20,6 +22,10 @@ const saveEvent = () => {
     EventService.saveEvent(event.value)
         .then(res => {
             router.push({ name: 'event-detail-view', params: { id: res.data.id } })
+            store.updateMessage('You are successfully add a new event for ' + res.data.title)
+            setTimeout(() => {
+                store.resetMessage()
+            }, 3000)
         })
         .catch(() => router.push({ name: 'network-error-view' }))
 }

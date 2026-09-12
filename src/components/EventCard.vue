@@ -9,7 +9,8 @@ defineProps<{
 </script>
 
 <template>
-  <RouterLink class="decoration-0 text-[#2c3e50]" :to="{ name: 'event-detail-view', params: { id: event.id } }">
+  <RouterLink class="flex items-center gap-x-5 decoration-0 text-[#2c3e50]"
+    :to="{ name: 'event-detail-view', params: { id: event.id } }">
     <div class="hover:scale-101 hover:shadow-sp p-[20px] w-[250px] cursor-pointer border border-gray-600 mb-[18px]">
       <h2>{{ event.title }}</h2>
       <span>by</span>

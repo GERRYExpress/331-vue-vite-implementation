@@ -1,9 +1,11 @@
 <script setup lang="ts">
 import BaseInput from '@/components/BaseInput.vue';
+import BaseSelect from '@/components/BaseSelect.vue';
 import EventService from '@/services/EventService';
+import OrganizerService from '@/services/OrganizerService';
 import { useMessageStore } from '@/stores/message';
-import type { Event } from '@/types';
-import { ref } from 'vue';
+import type { Event, Organizer } from '@/types';
+import { onMounted, ref } from 'vue';
 import { useRouter } from 'vue-router';
 const store = useMessageStore()
 const event = ref<Event>({
@@ -21,6 +23,17 @@ const event = ref<Event>({
     }
 })
 const router = useRouter()
+
+const organizers = ref<Organizer[]>([]);
+onMounted(() => {
+    OrganizerService.getOrganizers()
+        .then(res => {
+            organizers.value = res.data
+        })
+        .catch(() => {
+            router.push({ name: 'network-error-view' })
+        })
+})
 
 const saveEvent = () => {
     EventService.saveEvent(event.value)
@@ -45,6 +58,9 @@ const saveEvent = () => {
             <BaseInput v-model="event.description" type="text" label="Description" />
             <h3>Where is your event?</h3>
             <BaseInput v-model="event.location" type="text" label="Location" />
+            <h3>Who is your organizer?</h3>
+            <label class="block text-gray-500 font-bold">Select an Organizer</label>
+            <BaseSelect v-model="event.organizer.id" :options="organizers" label="Organizer" />
             <button
                 class="flex w-fit mx-auto items-center justify-center h-13 px-10 rounded-md font-semibold whitespace-nowrap border border-gray-400 focus:border-emerald-500 transition-all duration-200 ease-linear hover:scale-105 hover:border-emerald-500 hover:shadow-lg active:scale-100 focus:outline-none"
                 type="submit">Submit</button>
